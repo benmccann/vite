@@ -1,9 +1,9 @@
-import { Connect } from 'types/connect'
+import connect = require('connect')
 import { createDebugger, prettifyUrl, timeFrom } from '../../utils'
 
 const logTime = createDebugger('vite:time')
 
-export function timeMiddleware(root: string): Connect.NextHandleFunction {
+export function timeMiddleware(root: string): connect.NextHandleFunction {
   // Keep the named function. The name is visible in debug logs via `DEBUG=connect:dispatcher ...`
   return function viteTimeMiddleware(req, res, next) {
     const start = Date.now()

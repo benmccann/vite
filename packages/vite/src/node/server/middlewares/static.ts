@@ -1,6 +1,6 @@
 import path from 'path'
 import sirv, { Options } from 'sirv'
-import { Connect } from 'types/connect'
+import connect = require('connect')
 import { normalizePath, ResolvedConfig, ViteDevServer } from '../..'
 import { FS_PREFIX } from '../../constants'
 import {
@@ -29,7 +29,7 @@ const sirvOptions: Options = {
   }
 }
 
-export function servePublicMiddleware(dir: string): Connect.NextHandleFunction {
+export function servePublicMiddleware(dir: string): connect.NextHandleFunction {
   const serve = sirv(dir, sirvOptions)
 
   // Keep the named function. The name is visible in debug logs via `DEBUG=connect:dispatcher ...`
@@ -45,7 +45,7 @@ export function servePublicMiddleware(dir: string): Connect.NextHandleFunction {
 export function serveStaticMiddleware(
   dir: string,
   config: ResolvedConfig
-): Connect.NextHandleFunction {
+): connect.NextHandleFunction {
   const serve = sirv(dir, sirvOptions)
 
   // Keep the named function. The name is visible in debug logs via `DEBUG=connect:dispatcher ...`
@@ -83,7 +83,7 @@ export function serveStaticMiddleware(
 
 export function serveRawFsMiddleware(
   server: ViteDevServer
-): Connect.NextHandleFunction {
+): connect.NextHandleFunction {
   const serveFromRoot = sirv('/', sirvOptions)
 
   // Keep the named function. The name is visible in debug logs via `DEBUG=connect:dispatcher ...`

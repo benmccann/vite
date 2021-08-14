@@ -2,7 +2,7 @@ import fs from 'fs'
 import path from 'path'
 import MagicString from 'magic-string'
 import { AttributeNode, NodeTypes } from '@vue/compiler-dom'
-import { Connect } from 'types/connect'
+import connect = require('connect')
 import {
   applyHtmlTransforms,
   getScriptInfo,
@@ -148,7 +148,7 @@ const devHtmlHook: IndexHtmlTransformHook = async (
 
 export function indexHtmlMiddleware(
   server: ViteDevServer
-): Connect.NextHandleFunction {
+): connect.NextHandleFunction {
   // Keep the named function. The name is visible in debug logs via `DEBUG=connect:dispatcher ...`
   return async function viteIndexHtmlMiddleware(req, res, next) {
     const url = req.url && cleanUrl(req.url)

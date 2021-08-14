@@ -2,7 +2,7 @@ import * as http from 'http'
 import { createDebugger, isObject } from '../../utils'
 import httpProxy from 'http-proxy'
 import { HMR_HEADER } from '../ws'
-import { Connect } from 'types/connect'
+import connect = require('connect')
 import { HttpProxy } from 'types/http-proxy'
 import chalk from 'chalk'
 import { ResolvedConfig } from '../..'
@@ -31,7 +31,7 @@ export interface ProxyOptions extends HttpProxy.ServerOptions {
 export function proxyMiddleware(
   httpServer: http.Server | null,
   config: ResolvedConfig
-): Connect.NextHandleFunction {
+): connect.NextHandleFunction {
   const options = config.server.proxy!
 
   // lazy require only when proxy is used

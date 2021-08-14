@@ -3,7 +3,7 @@ import path from 'path'
 import * as net from 'net'
 import * as http from 'http'
 import * as https from 'https'
-import connect from 'connect'
+import connect = require('connect')
 import corsMiddleware from 'cors'
 import chalk from 'chalk'
 import { AddressInfo } from 'net'
@@ -29,7 +29,6 @@ import {
 } from './middlewares/static'
 import { timeMiddleware } from './middlewares/time'
 import { ModuleGraph, ModuleNode } from './moduleGraph'
-import { Connect } from 'types/connect'
 import { createDebugger, ensureLeadingSlash, normalizePath } from '../utils'
 import { errorMiddleware, prepareError } from './middlewares/error'
 import { handleHMRUpdate, HmrOptions, handleFileAddUnlink } from './hmr'
@@ -191,11 +190,11 @@ export interface ViteDevServer {
    *
    * https://github.com/senchalabs/connect#use-middleware
    */
-  middlewares: Connect.Server
+  middlewares: connect.Server
   /**
    * @deprecated use `server.middlewares` instead
    */
-  app: Connect.Server
+  app: connect.Server
   /**
    * native Node http server instance
    * will be null in middleware mode
@@ -311,7 +310,7 @@ export async function createServer(
     middlewareMode = 'ssr'
   }
 
-  const middlewares = connect() as Connect.Server
+  const middlewares = connect()
   const httpServer = middlewareMode
     ? null
     : await resolveHttpServer(serverConfig, middlewares, httpsOptions)

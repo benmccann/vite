@@ -1,6 +1,6 @@
-import { Connect } from 'types/connect'
+import connect = require('connect')
 
-export function decodeURIMiddleware(): Connect.NextHandleFunction {
+export function decodeURIMiddleware(): connect.NextHandleFunction {
   // Keep the named function. The name is visible in debug logs via `DEBUG=connect:dispatcher ...`
   return function viteDecoreURIMiddleware(req, _, next) {
     // #2195

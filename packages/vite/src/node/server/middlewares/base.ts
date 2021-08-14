@@ -1,12 +1,12 @@
 import { parse as parseUrl } from 'url'
 import { ViteDevServer } from '..'
-import { Connect } from 'types/connect'
+import connect = require('connect')
 
 // this middleware is only active when (config.base !== '/')
 
 export function baseMiddleware({
   config
-}: ViteDevServer): Connect.NextHandleFunction {
+}: ViteDevServer): connect.NextHandleFunction {
   const base = config.base
 
   // Keep the named function. The name is visible in debug logs via `DEBUG=connect:dispatcher ...`

@@ -77,7 +77,6 @@ export type {
   PrunePayload,
   ErrorPayload
 } from 'types/hmrPayload'
-export type { Connect } from 'types/connect'
 export type { HttpProxy } from 'types/http-proxy'
 export type { FSWatcher, WatchOptions } from 'types/chokidar'
 export type { Terser } from 'types/terser'

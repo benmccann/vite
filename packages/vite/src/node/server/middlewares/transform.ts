@@ -1,6 +1,6 @@
 import path from 'path'
 import { ViteDevServer } from '..'
-import { Connect } from 'types/connect'
+import connect = require('connect')
 import {
   cleanUrl,
   createDebugger,
@@ -41,7 +41,7 @@ const knownIgnoreList = new Set(['/', '/favicon.ico'])
 
 export function transformMiddleware(
   server: ViteDevServer
-): Connect.NextHandleFunction {
+): connect.NextHandleFunction {
   const {
     config: { root, logger, cacheDir },
     moduleGraph

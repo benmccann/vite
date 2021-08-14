@@ -11,6 +11,8 @@
     "publicTrimmedFilePath": "./dist/node/index.d.ts"
   },
 
+  "bundledPackages": ["connect"],
+
   "apiReport": {
     "enabled": false
   },

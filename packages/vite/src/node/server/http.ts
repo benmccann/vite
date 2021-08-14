@@ -1,15 +1,15 @@
+import connect = require('connect')
 import fs, { promises as fsp } from 'fs'
 import path from 'path'
 import { Server as HttpServer } from 'http'
 import { ServerOptions as HttpsServerOptions } from 'https'
 import { ResolvedConfig, ServerOptions } from '..'
 import { isObject } from '../utils'
-import { Connect } from 'types/connect'
 import { Logger } from '../logger'
 
 export async function resolveHttpServer(
   { proxy }: ServerOptions,
-  app: Connect.Server,
+  app: connect.Server,
   httpsOptions?: HttpsServerOptions
 ): Promise<HttpServer> {
   if (!httpsOptions) {

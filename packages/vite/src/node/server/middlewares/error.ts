@@ -1,7 +1,7 @@
 import chalk from 'chalk'
 import { RollupError } from 'rollup'
 import { ViteDevServer } from '../..'
-import { Connect } from 'types/connect'
+import connect = require('connect')
 import { pad } from '../../utils'
 import strip from 'strip-ansi'
 import { ErrorPayload } from 'types/hmrPayload'
@@ -42,7 +42,7 @@ function cleanStack(stack: string) {
 export function errorMiddleware(
   server: ViteDevServer,
   allowNext = false
-): Connect.ErrorHandleFunction {
+): connect.ErrorHandleFunction {
   // note the 4 args must be kept for connect to treat this as error middleware
   // Keep the named function. The name is visible in debug logs via `DEBUG=connect:dispatcher ...`
   return function viteErrorMiddleware(err: RollupError, _req, res, next) {

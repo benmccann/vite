@@ -1,8 +1,3 @@
-declare module 'connect' {
-  const connect: () => any
-  export = connect
-}
-
 declare module 'cors' {
   function cors(options: any): any
   export = cors

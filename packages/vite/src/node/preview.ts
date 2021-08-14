@@ -1,10 +1,9 @@
 import path from 'path'
 import sirv from 'sirv'
 import chalk from 'chalk'
-import connect from 'connect'
+import connect = require('connect')
 import compression from 'compression'
 import { ResolvedConfig, ServerOptions } from '.'
-import { Connect } from 'types/connect'
 import {
   resolveHttpsConfig,
   resolveHttpServer,
@@ -20,7 +19,7 @@ export async function preview(
   config: ResolvedConfig,
   serverOptions: Pick<ServerOptions, 'port' | 'host'>
 ): Promise<void> {
-  const app = connect() as Connect.Server
+  const app = connect()
   const httpServer = await resolveHttpServer(
     config.server,
     app,
