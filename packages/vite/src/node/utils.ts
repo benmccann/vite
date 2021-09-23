@@ -11,7 +11,7 @@ import {
   CLIENT_PUBLIC_PATH,
   ENV_PUBLIC_PATH
 } from './constants'
-import resolve from 'resolve'
+import { CachedInputFileSystem, ResolverFactory } from 'enhanced-resolve'
 import builtins from 'builtin-modules'
 import { FSWatcher } from 'chokidar'
 import remapping from '@ampproject/remapping'
@@ -57,12 +57,15 @@ export function resolveFrom(
   preserveSymlinks = false,
   ssr = false
 ): string {
-  return resolve.sync(id, {
-    basedir,
+  const resolver = ResolverFactory.createResolver({
+    fileSystem: new CachedInputFileSystem(fs, 4000),
     extensions: ssr ? ssrExtensions : DEFAULT_EXTENSIONS,
     // necessary to work with pnpm
-    preserveSymlinks: preserveSymlinks || isRunningWithYarnPnp || false
+    symlinks: preserveSymlinks || isRunningWithYarnPnp || false
   })
+  const result = resolver.resolveSync({}, basedir, id)
+  if (!result) throw new Error(`could not resolve ${id}`)
+  return result
 }
 
 /**
