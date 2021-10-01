@@ -11,7 +11,7 @@ import {
   CLIENT_PUBLIC_PATH,
   ENV_PUBLIC_PATH
 } from './constants'
-import resolve from 'resolve'
+import resolve from 'enhanced-resolve'
 import builtins from 'builtin-modules'
 import { FSWatcher } from 'chokidar'
 import remapping from '@ampproject/remapping'
@@ -57,12 +57,16 @@ export function resolveFrom(
   preserveSymlinks = false,
   ssr = false
 ): string {
-  return resolve.sync(id, {
-    basedir,
+  preserveSymlinks = preserveSymlinks || isRunningWithYarnPnp || false
+  const result = resolve.create.sync({
     extensions: ssr ? ssrExtensions : DEFAULT_EXTENSIONS,
     // necessary to work with pnpm
-    preserveSymlinks: preserveSymlinks || isRunningWithYarnPnp || false
-  })
+    symlinks: !preserveSymlinks
+  })(basedir, id)
+  if (!result) {
+    throw new Error(`Could not resolve ${id}`)
+  }
+  return result
 }
 
 /**
