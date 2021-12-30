@@ -1,6 +1,6 @@
-import { cac } from 'cac'
 import colors from 'picocolors'
 import { performance } from 'perf_hooks'
+import sade from 'sade'
 import type { BuildOptions } from './build'
 import type { ServerOptions } from './server'
 import type { LogLevel } from './logger'
@@ -8,7 +8,7 @@ import { createLogger } from './logger'
 import { resolveConfig } from '.'
 import { preview } from './preview'
 
-const cli = cac('vite')
+const cli = sade('vite')
 
 // global options
 interface GlobalCLIOptions {
@@ -61,9 +61,8 @@ cli
 
 // dev
 cli
-  .command('[root]') // default command
+  .command('dev [root]', '', { default: true }) // default command
   .alias('serve') // the command is called 'serve' in Vite's API
-  .alias('dev') // alias to align with the script name
   .option('--host [host]', `[string] specify hostname`)
   .option('--port <port>', `[number] specify port`)
   .option('--https', `[boolean] use TLS + HTTP/2`)
@@ -255,7 +254,6 @@ cli
     }
   )
 
-cli.help()
 cli.version(require('../../package.json').version)
 
-cli.parse()
+cli.parse(process.argv)

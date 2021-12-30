@@ -91,7 +91,6 @@ const sharedNodeOptions = {
 }
 
 /**
- *
  * @param {boolean} isProduction
  * @returns {import('rollup').RollupOptions}
  */
@@ -118,7 +117,9 @@ const createNodeConfig = (isProduction) => {
         entries: {
           '@vue/compiler-dom': require.resolve(
             '@vue/compiler-dom/dist/compiler-dom.cjs.js'
-          )
+          ),
+          // force rollup to use the commonjs version of mri until there's an esm version of sade
+          mri: require.resolve('mri/lib/index.js')
         }
       }),
       nodeResolve({ preferBuiltins: true }),
@@ -151,11 +152,6 @@ const createNodeConfig = (isProduction) => {
           'fsevents-handler.js': {
             src: `require('fsevents')`,
             replacement: `eval('require')('fsevents')`
-          },
-          // cac re-assigns module.exports even in its mjs dist
-          'cac/dist/index.mjs': {
-            src: `if (typeof module !== "undefined") {`,
-            replacement: `if (false) {`
           },
           // postcss-import -> sugarss
           'process-content.js': {
